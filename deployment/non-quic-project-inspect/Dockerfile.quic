@@ -1,0 +1,33 @@
+FROM ubuntu:22.04
+
+RUN apt update && apt install -y git build-essential cmake golang zlib1g-dev libpcre3-dev libssl-dev wget curl
+
+# Build NGINX with QUIC (Cloudflare quiche)
+RUN git clone --recursive https://github.com/cloudflare/quiche.git /quiche \
+    && git clone https://github.com/nginx/nginx.git /nginx \
+    && cd /nginx && git checkout quic
+
+WORKDIR /nginx
+RUN ./auto/configure \
+    --with-http_v3_module \
+    --with-http_ssl_module \
+    --with-http_v2_module \
+    --with-stream_quic_module \
+    --with-openssl=../quiche/deps/boringssl \
+    --with-quiche=../quiche \
+    --prefix=/usr/local/nginx
+RUN make -j$(nproc) && make install
+
+# SSL
+RUN mkdir -p /etc/nginx/ssl && \
+    openssl req -x509 -newkey rsa:2048 -nodes -days 365 \
+    -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/cert.pem \
+    -subj "/CN=localhost"
+
+# Copy files
+COPY trans_proto/ /usr/share/nginx/html/
+COPY trans_proto/ /var/www/html/
+COPY trans_proto/nginx-quic.conf /usr/local/nginx/conf/nginx.conf
+
+EXPOSE 80 3000 443/tcp 443/udp
+CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]

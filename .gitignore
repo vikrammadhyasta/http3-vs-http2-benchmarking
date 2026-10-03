@@ -1,0 +1,40 @@
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*credentials*
+*secret*
+
+# TLS and QUIC key logs
+sslkeylogfile
+quic.keys
+*.keylog
+
+# Packet captures
+*.pcap
+*.pcapng
+*.cap
+
+# Logs and generated output
+*.log
+*.hprof
+*.class
+*.jar
+target/
+build/
+out/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

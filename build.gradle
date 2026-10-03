@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'tech.kwik:flupke:0.9.4'
+    implementation 'tech.kwik:kwik:0.10.8'
+    implementation 'tech.kwik:qpack:2.0.1'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/quic']
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 11
+    options.encoding = 'UTF-8'
+}

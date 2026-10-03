@@ -1,4 +1,4 @@
-# QUIC (HTTP/3) vs TCP (HTTP/2)
+# HTTP/3 vs HTTP/2 Benchmarking
 
 A research project comparing HTTP/3 over QUIC with HTTP/2 over TCP
 under different network conditions and web workloads.

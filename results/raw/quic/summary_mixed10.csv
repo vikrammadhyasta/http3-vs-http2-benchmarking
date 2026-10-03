@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+bzm - HTTP Sampler,10,12339,912,39227,13973.01,0.000%,.24657,793.49,0.03,3295398.4
+TOTAL,10,12339,912,39227,13973.01,0.000%,.24657,793.49,0.03,3295398.4
